@@ -69,7 +69,7 @@ when 'cancel-old'
   options[:circle_api_token] ||= ENV['CIRCLE_API_TOKEN']
   require_opt options, :circle_api_token
 
-  BuildCanceler.new(options).cancel_old_builds!
+  Circlemator::BuildCanceler.new(options).cancel_old_builds!
 else
   puts parser
 end
