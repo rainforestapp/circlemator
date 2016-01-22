@@ -1,36 +1,105 @@
 # Circlemator
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/circlemator`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Circlemator is a bucket of tricks for working with CircleCI and Github
+used internally at Rainforest QA.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'circlemator'
+gem 'circlemator', require: false
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install circlemator
+Then run `bundle` and check in the resulting Gemfile.lock. That should
+be enough, really.
 
 ## Usage
 
-TODO: Write usage instructions here
+Circlemator tasks are designed to be added to your circle.yml file
+like so:
 
-## Development
+```yml
+- bundle exec circlemator <task> [options]
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake false` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Different tasks require different options/placement in your
+circle.yml.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+## Tasks
+
+### Cancel old builds
+
+CircleCI starts a build every time you push to Github. That's usually
+a good thing, but if you have a big test suite it can be annoying when
+your build queue gets gummed up running builds on out-of-date
+commits. To clear things up, the `cancel-old` task cancels all builds
+that are not at the head of their branch. It should be in your
+circle.yml before your tests are run but after the dependencies have
+been fetched, for example:
+
+```yml
+test:
+  pre:
+    - bundle exec circlemator cancel-old
+```
+
+In order for this to work, you need the following environment variable
+to be set in CircleCI:
+
+- `CIRCLE_API_TOKEN`: Your CircleCI API token. (Can also be set with
+  the `-t` option.)
+
+### Self-merge release branch
+
+Preamble: at Rainforest, our process for getting code into production
+looks like this:
+
+1. Push to feature branch pull request.
+2. Run unit tests and get code review (repeat 1-2 as necessary).
+3. Merge feature branch to `develop`.
+4. Open release pull request from `develop` to `master`.
+5. Run unit tests + Rainforest against `develop`.
+6. Merge `develop` into `master` if everything's green.
+7. Deploy from `master`.
+
+Out of these, steps 1, 2, 3, and 4 require manual intervention, but
+everything else should be automatic! The `self-merge` task is designed
+to take care of step 6 (the rest is handled by CircleCI out of the
+box).
+
+To use `self-merge`, add something like the following to your
+circle.yml:
+
+```yml
+deployment:
+  staging:
+    branch: develop
+    commands:
+      <any commands you would normally run>
+      - bundle exec circlemator self-merge --base-branch=master --compare-branch=develop
+```
+
+Swap out `develop` and `master` as necessary to fit your workflow. Be
+warned, the `circlemator` command should probably be the last command
+in your deploy stage! (Otherwise you'll merge before your build is
+done.)
+
+`self-merge` will *only* run if there is an open pull request against
+the base branch. That means you have a way to prevent automatic
+shipping in exceptional circumstances: just don't open a release pull
+request.
+
+`self-merge` requires the following environment variable to be set:
+
+- `GITHUB_AUTH_TOKEN`: A Github API auth token for a user with commit
+  access to your repo. (Can also be set with the `-g` option.)
+
+Also, unfortunately branch protection cannot be enabled on your
+`master` branch. (Contributions welcome for anyone who can think of a
+workaround...)
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/circlemator.
-
+Bug reports and pull requests are welcome on GitHub at
+https://github.com/rainforestapp/circlemator.
