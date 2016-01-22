@@ -1,0 +1,81 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require_relative '../lib/circlemator/build_canceler'
+require_relative '../lib/circlemator/self_merger'
+
+options = {}
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: circlemator (self-merge|cancel-old) [options]"
+
+  opts.on('-bBRANCH', '--base-branch=BRANCH', 'Base branch for merging') do |b|
+    options[:base_branch] = b
+  end
+
+  opts.on('-cBRANCH', '--compare-branch=BRANCH', 'Compare branch for merging') do |b|
+    options[:compare_branch] = b
+  end
+
+  opts.on('-gTOKEN', '--github-auth-token=TOKEN', 'Github auth token') do |t|
+    options[:github_auth_token] = t
+  end
+
+  opts.on('-tTOKEN', '--circle-api-token=TOKEN', 'CircleCI API token') do |t|
+    options[:circle_api_token] = t
+  end
+
+  opts.on('-h', '--help', 'Print this help message') do
+    puts opts
+    exit
+  end
+end
+
+parser.parse!
+
+def require_env(var)
+  if !ENV[var] || ENV[var].empty?
+    puts "Environment variable '#{var}' is required"
+    exit 1
+  end
+
+  ENV[var]
+end
+
+def require_opt(opts, key)
+  if !opts[key]
+    puts "Option #{key.gsub(/_/, '-')} is required!"
+    exit 1
+  end
+end
+
+if !ENV['CIRCLECI']
+  puts 'Cirlemator should only be run from CircleCI'
+  exit 1
+end
+
+options[:user] = require_env 'CIRCLE_PROJECT_USERNAME'
+options[:repo] = require_env 'CIRCLE_PROJECT_REPONAME'
+
+case ARGV[1]
+when 'self-merge'
+  options[:sha] = require_env 'CIRCLE_SHA1'
+  options[:github_auth_token] ||= ENV['GITHUB_AUTH_TOKEN']
+  require_opt options, :github_auth_token
+  require_opt options, :base_branch
+  require_opt options, :compare_branch
+
+  Circlemator::SelfMerger.new(options).merge!
+when 'cancel-old'
+  options[:current_build] = require_env('CIRCLE_BUILD_NUM').to_i
+  options[:circle_api_token] ||= ENV['CIRCLE_API_TOKEN']
+  require_opt options, :circle_api_token
+
+  BuildCanceler.new(options).cancel_old_builds!
+else
+  puts parser
+end
+
+
+
+# Local Variables:
+# major-mode: ruby-mode
+# End:
