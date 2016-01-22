@@ -12,7 +12,7 @@ module Circlemator
       @user = user
       @repo = repo
       @sha = sha
-      @auth_token = auth_token
+      @auth_token = github_auth_token
       @base_branch = base_branch
       @compare_branch = compare_branch
     end
