@@ -55,7 +55,7 @@ end
 options[:user] = require_env 'CIRCLE_PROJECT_USERNAME'
 options[:repo] = require_env 'CIRCLE_PROJECT_REPONAME'
 
-case ARGV[1]
+case ARGV[0]
 when 'self-merge'
   options[:sha] = require_env 'CIRCLE_SHA1'
   options[:github_auth_token] ||= ENV['GITHUB_AUTH_TOKEN']
