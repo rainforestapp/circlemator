@@ -10,8 +10,11 @@ Gem::Specification.new do |spec|
   spec.email         = ["emanuel@rainforestqa.com"]
 
   spec.summary       = %q{A bucket of tricks for CircleCI and Github.}
-  spec.description   = %q{A bucket of tricks for CircleCI and Github.}
+  spec.description   = <<-EOF
+    A few utilities for CircleCI to improve your CI workflow.
+  EOF
   spec.homepage      = "https://github.com/rainforestapp/circlemator"
+  spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
