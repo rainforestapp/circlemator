@@ -1,7 +1,7 @@
 # Circlemator
 
 Circlemator is a bucket of tricks for working with CircleCI and Github
-used internally at Rainforest QA.
+used internally at [Rainforest QA](http://www.rainforestqa.com).
 
 ## Installation
 
@@ -59,7 +59,7 @@ looks like this:
 2. Run unit tests and get code review (repeat 1-2 as necessary).
 3. Merge feature branch to `develop`.
 4. Open release pull request from `develop` to `master`.
-5. Run unit tests + Rainforest against `develop`.
+5. Run unit tests + [Rainforest](http://www.rainforestqa.com) against `develop`.
 6. Merge `develop` into `master` if everything's green.
 7. Deploy from `master`.
 
