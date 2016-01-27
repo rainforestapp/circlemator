@@ -42,7 +42,7 @@ end
 
 def require_opt(opts, key)
   if !opts[key]
-    puts "Option #{key.gsub(/_/, '-')} is required!"
+    puts "Option #{key.to_s.gsub(/_/, '-')} is required!"
     exit 1
   end
 end
