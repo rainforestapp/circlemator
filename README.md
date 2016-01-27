@@ -92,7 +92,7 @@ request.
 
 `self-merge` requires the following environment variable to be set:
 
-- `GITHUB_AUTH_TOKEN`: A Github API auth token for a user with commit
+- `GITHUB_ACCESS_TOKEN`: A Github API auth token for a user with commit
   access to your repo. (Can also be set with the `-g` option.)
 
 Also, unfortunately branch protection cannot be enabled on your
