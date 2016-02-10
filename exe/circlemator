@@ -64,6 +64,7 @@ when 'self-merge'
   require_opt options, :github_auth_token
   require_opt options, :base_branch
   require_opt options, :compare_branch
+  options[:github_repo] = Circlemator::GithubRepo.new(options)
 
   Circlemator::SelfMerger.new(options).merge!
 when 'cancel-old'
