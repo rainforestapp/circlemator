@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'httparty'
 require 'json'
 
@@ -21,7 +22,7 @@ module Circlemator
       pr_number, pr_url = find_pr
       return if pr_number.nil? || pr_url.nil?
 
-      msg = "Auto-merge by Circlemator!"
+      msg = 'Auto-merge by Circlemator!'
       response = HTTParty.put "#{pr_url}/merge",
                               body: { commit_message: msg, sha: @sha }.to_json,
                               basic_auth: github_auth
@@ -42,18 +43,18 @@ module Circlemator
       end
 
       prs = JSON.parse(response.body)
-      pr = prs.find do |pr|
+      release_pr = prs.find do |pr|
         pr.fetch('head').fetch('ref') == @compare_branch &&
           pr.fetch('head').fetch('sha') == @sha &&
           pr.fetch('base').fetch('ref') == @base_branch
       end
 
-      if pr.nil?
+      if release_pr.nil?
         puts 'No release PR. Not merging.'
         return
       end
 
-      [pr.fetch('number'), pr.fetch('url')]
+      [release_pr.fetch('number'), release_pr.fetch('url')]
     end
 
 

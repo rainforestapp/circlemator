@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 require 'optparse'
 require_relative '../lib/circlemator/build_canceler'
 require_relative '../lib/circlemator/self_merger'
 
 options = {}
 parser = OptionParser.new do |opts|
-  opts.banner = "Usage: circlemator (self-merge|cancel-old) [options]"
+  opts.banner = 'Usage: circlemator (self-merge|cancel-old) [options]'
 
   opts.on('-bBRANCH', '--base-branch=BRANCH', 'Base branch for merging') do |b|
     options[:base_branch] = b

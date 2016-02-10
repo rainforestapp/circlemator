@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'httparty'
 require 'json'
 
@@ -30,7 +31,7 @@ module Circlemator
       end
 
       if cancel_self
-        puts "Daisy, Daisy, give me your answer, do..."
+        puts 'Daisy, Daisy, give me your answer, do...'
         HTTParty.post "https://circleci.com/api/v1/project/#{@user}/#{@repo}/#{@current_build}/cancel",
                       circle_auth
       end
