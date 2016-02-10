@@ -50,6 +50,26 @@ to be set in CircleCI:
 - `CIRCLE_API_TOKEN`: Your CircleCI API token. (Can also be set with
   the `-t` option.)
 
+### Style check
+
+Think of this as a poor man's HoundCI: it runs Rubocop (and/or more
+linters/checkers TBD) and comments on the Github pull request using
+the excellent [Pronto](https://github.com/mmozuras/pronto). Use it
+like so:
+
+```yml
+test:
+  pre:
+    - bundle exec circlemator style-check --base-branch=develop
+```
+
+(It probably makes sense in either the `pre` or `override` steps.)
+
+`style-check` requires the following environment variable to be set:
+
+- `GITHUB_ACCESS_TOKEN`: A Github API auth token for a user with commit
+  access to your repo. (Can also be set with the `-g` option.)
+
 ### Self-merge release branch
 
 Preamble: at Rainforest, our process for getting code into production
