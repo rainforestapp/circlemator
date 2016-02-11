@@ -21,7 +21,7 @@ module Circlemator
         formatter = ::Pronto::Formatter::GithubFormatter.new
       end
 
-      ::Pronto.run(@base_branch, '.', formatter)
+      ::Pronto.run("origin/#{@base_branch}", '.', formatter)
     end
   end
 end

@@ -63,7 +63,12 @@ test:
     - bundle exec circlemator style-check --base-branch=develop
 ```
 
-(It probably makes sense in either the `pre` or `override` steps.)
+(Note: use local branch names, like `develop` instead of
+`origin/develop`; `origin` will be prepended for running pronto as
+necessary.)
+
+It probably makes sense to put `style-check` in either the `pre` or
+`override` steps.)
 
 `style-check` requires the following environment variable to be set:
 

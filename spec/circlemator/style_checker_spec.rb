@@ -31,7 +31,7 @@ RSpec.describe Circlemator::StyleChecker do
 
       it 'runs pronto against that PR' do
         expect(Pronto::Formatter::GithubPullRequestFormatter).to receive(:new).and_return pronto_double
-        expect(Pronto).to receive(:run).with 'master', '.', pronto_double
+        expect(Pronto).to receive(:run).with 'origin/master', '.', pronto_double
 
         subject
 
@@ -47,7 +47,7 @@ RSpec.describe Circlemator::StyleChecker do
 
       it 'runs pronto against the commit' do
         expect(Pronto::Formatter::GithubFormatter).to receive(:new).and_return pronto_double
-        expect(Pronto).to receive(:run).with 'master', '.', pronto_double
+        expect(Pronto).to receive(:run).with 'origin/master', '.', pronto_double
 
         subject
       end
