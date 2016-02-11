@@ -1,11 +1,14 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 require 'optparse'
 require_relative '../lib/circlemator/build_canceler'
 require_relative '../lib/circlemator/self_merger'
+require_relative '../lib/circlemator/github_repo'
+require_relative '../lib/circlemator/style_checker'
 
 options = {}
 parser = OptionParser.new do |opts|
-  opts.banner = "Usage: circlemator (self-merge|cancel-old) [options]"
+  opts.banner = 'Usage: circlemator (self-merge|cancel-old) [options]'
 
   opts.on('-bBRANCH', '--base-branch=BRANCH', 'Base branch for merging') do |b|
     options[:base_branch] = b
@@ -54,14 +57,16 @@ end
 
 options[:user] = require_env 'CIRCLE_PROJECT_USERNAME'
 options[:repo] = require_env 'CIRCLE_PROJECT_REPONAME'
+options[:github_auth_token] ||= ENV['GITHUB_ACCESS_TOKEN']
+options[:github_auth_token] ||= ENV['GITHUB_AUTH_TOKEN']
 
 case ARGV[0]
 when 'self-merge'
   options[:sha] = require_env 'CIRCLE_SHA1'
-  options[:github_auth_token] ||= ENV['GITHUB_AUTH_TOKEN']
   require_opt options, :github_auth_token
   require_opt options, :base_branch
   require_opt options, :compare_branch
+  options[:github_repo] = Circlemator::GithubRepo.new(options)
 
   Circlemator::SelfMerger.new(options).merge!
 when 'cancel-old'
@@ -70,11 +75,17 @@ when 'cancel-old'
   require_opt options, :circle_api_token
 
   Circlemator::BuildCanceler.new(options).cancel_old_builds!
+when 'style-check'
+  options[:sha] = require_env 'CIRCLE_SHA1'
+  options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
+  require_opt options, :github_auth_token
+  require_opt options, :base_branch
+  options[:github_repo] = Circlemator::GithubRepo.new(options)
+
+  Circlemator::StyleChecker.new(options).check!
 else
   puts parser
 end
-
-
 
 # Local Variables:
 # major-mode: ruby-mode

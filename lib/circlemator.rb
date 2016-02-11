@@ -1,4 +1,5 @@
-require "circlemator/version"
+# frozen_string_literal: true
+require 'circlemator/version'
 
 module Circlemator
 end

@@ -1,4 +1,4 @@
-# Circlemator
+# Circlemator [![Circle CI](https://circleci.com/gh/rainforestapp/circlemator.png?style=badge&circle-token=0b39cf33b52e34ef6bb29cf2f2a1c071fef3f26f)](https://circleci.com/gh/rainforestapp/circlemator)
 
 Circlemator is a bucket of tricks for working with CircleCI and Github
 used internally at [Rainforest QA](http://www.rainforestqa.com).
@@ -50,6 +50,26 @@ to be set in CircleCI:
 - `CIRCLE_API_TOKEN`: Your CircleCI API token. (Can also be set with
   the `-t` option.)
 
+### Style check
+
+Think of this as a poor man's HoundCI: it runs Rubocop (and/or more
+linters/checkers TBD) and comments on the Github pull request using
+the excellent [Pronto](https://github.com/mmozuras/pronto). Use it
+like so:
+
+```yml
+test:
+  pre:
+    - bundle exec circlemator style-check --base-branch=develop
+```
+
+(It probably makes sense in either the `pre` or `override` steps.)
+
+`style-check` requires the following environment variable to be set:
+
+- `GITHUB_ACCESS_TOKEN`: A Github API auth token for a user with commit
+  access to your repo. (Can also be set with the `-g` option.)
+
 ### Self-merge release branch
 
 Preamble: at Rainforest, our process for getting code into production
@@ -92,7 +112,7 @@ request.
 
 `self-merge` requires the following environment variable to be set:
 
-- `GITHUB_AUTH_TOKEN`: A Github API auth token for a user with commit
+- `GITHUB_ACCESS_TOKEN`: A Github API auth token for a user with commit
   access to your repo. (Can also be set with the `-g` option.)
 
 Also, unfortunately branch protection cannot be enabled on your
