@@ -1,4 +1,4 @@
-# Circlemator
+# Circlemator [![Circle CI](https://circleci.com/gh/rainforestapp/circlemator.png?style=badge&circle-token=0b39cf33b52e34ef6bb29cf2f2a1c071fef3f26f)](https://circleci.com/gh/rainforestapp/circlemator)
 
 Circlemator is a bucket of tricks for working with CircleCI and Github
 used internally at [Rainforest QA](http://www.rainforestqa.com).
