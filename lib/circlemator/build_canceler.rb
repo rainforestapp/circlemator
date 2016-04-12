@@ -4,7 +4,7 @@ require 'json'
 
 module Circlemator
   class BuildCanceler
-    def initialize(user: , repo: , current_build: , circle_api_token: , **_opts)
+    def initialize(user:, repo:, current_build:, circle_api_token:, **_opts)
       @user = user
       @repo = repo
       @current_build = current_build
