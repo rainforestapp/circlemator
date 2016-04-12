@@ -3,6 +3,7 @@ require 'httparty'
 require 'json'
 require 'pronto'
 require 'pronto/rubocop'
+require 'pronto/commentator'
 require 'circlemator/pr_finder'
 
 module Circlemator
