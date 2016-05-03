@@ -75,6 +75,13 @@ It probably makes sense to put `style-check` in either the `pre` or
 - `GITHUB_ACCESS_TOKEN`: A Github API auth token for a user with commit
   access to your repo. (Can also be set with the `-g` option.)
 
+`style-check` also has the following option:
+
+- `--clean`: Cleans old comments from the pull request before commenting again,
+  to avoid double-commenting for the same issue. *Warning: only use this option
+  if you have a special Github user for Circlemator, otherwise you may end up
+  accidentally deleting user code review comments!*
+
 ### Self-merge release branch
 
 Preamble: at Rainforest, our process for getting code into production

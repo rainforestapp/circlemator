@@ -58,7 +58,7 @@ RSpec.describe Circlemator::PrFinder do
       end
 
       it 'raises an error' do
-        expect { subject }.to raise_error Circlemator::PrFinder::BadResponseError
+        expect { subject }.to raise_error Circlemator::GithubRepo::BadResponseError
       end
     end
 

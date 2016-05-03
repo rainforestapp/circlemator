@@ -11,7 +11,7 @@ RSpec.describe Circlemator::GithubRepo do
     context 'with a path' do
       it 'updates the path and adds the authorization' do
         expect(described_class)
-          .to receive(:get).with("/#{user}/#{repo}/pulls",
+          .to receive(:get).with("/repos/#{user}/#{repo}/pulls",
                                  query: { foo: :bar },
                                  basic_auth: { username: auth_token, password: 'x-oauth-basic' })
 
@@ -22,7 +22,7 @@ RSpec.describe Circlemator::GithubRepo do
     context 'with a full URL' do
       it 'changes the URL to a path' do
         expect(described_class)
-          .to receive(:get).with("/#{user}/#{repo}/pulls", any_args)
+          .to receive(:get).with("/repos/#{user}/#{repo}/pulls", any_args)
 
         github_repo.get("https://api.github.com/repos/#{user}/#{repo}/pulls")
       end
@@ -46,7 +46,7 @@ RSpec.describe Circlemator::GithubRepo do
   describe '#put' do
     it 'updates the path and adds the authorization' do
       expect(described_class)
-        .to receive(:put).with("/#{user}/#{repo}/pulls/123/merge",
+        .to receive(:put).with("/repos/#{user}/#{repo}/pulls/123/merge",
                                body: { foo: :bar },
                                basic_auth: { username: auth_token, password: 'x-oauth-basic' })
 
