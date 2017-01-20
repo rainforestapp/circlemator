@@ -17,7 +17,7 @@ module Circlemator
       check_response resp
 
       builds = JSON.parse(resp.body)
-               .select   { |b| %w(running scheduled queued not_running).include? b.fetch('status') }
+               .select   { |b| %w(running scheduled queued not_running).include?(b.fetch('status')) && b['branch'] }
                .group_by { |b| b.fetch('branch') }
                .flat_map { |_, group| group.sort_by { |b| b.fetch('build_num') }[0...-1] }
                .map      { |b| b.fetch('build_num') }
