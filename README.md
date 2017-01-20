@@ -128,3 +128,8 @@ workaround...)
 
 Bug reports and pull requests are welcome on GitHub at
 https://github.com/rainforestapp/circlemator.
+
+### Releasing
+
+- Make sure you're an owner on rubygems.org
+- `rake release`
