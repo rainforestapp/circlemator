@@ -5,6 +5,7 @@ require 'pronto'
 require 'pronto/rubocop'
 require 'pronto/commentator'
 require 'circlemator/pr_finder'
+require 'circlemator/pr_cleaner'
 
 module Circlemator
   class StyleChecker
@@ -14,8 +15,11 @@ module Circlemator
     end
 
     def check!
-      pr_number, _ = PrFinder.new(@opts).find_pr
+      pr_number, pr_url = PrFinder.new(@opts).find_pr
       if pr_number
+        if @opts[:clean]
+          PrCleaner.new(github_repo: @opts.fetch(:github_repo), pr_url: pr_url).clean!
+        end
         ENV['PULL_REQUEST_ID'] = pr_number.to_s
         formatter = ::Pronto::Formatter::GithubPullRequestFormatter.new
       else

@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
+lib = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'optparse'
-require_relative '../lib/circlemator/build_canceler'
-require_relative '../lib/circlemator/self_merger'
-require_relative '../lib/circlemator/github_repo'
-require_relative '../lib/circlemator/style_checker'
+require 'circlemator/build_canceler'
+require 'circlemator/self_merger'
+require 'circlemator/github_repo'
+require 'circlemator/style_checker'
 
 options = {}
 parser = OptionParser.new do |opts|
@@ -24,6 +26,10 @@ parser = OptionParser.new do |opts|
 
   opts.on('-tTOKEN', '--circle-api-token=TOKEN', 'CircleCI API token') do |t|
     options[:circle_api_token] = t
+  end
+
+  opts.on('--clean', 'Clean existing comments before commenting on a pull request') do
+    options[:clean] = true
   end
 
   opts.on('-h', '--help', 'Print this help message') do

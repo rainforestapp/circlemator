@@ -3,12 +3,6 @@ require 'circlemator/github_repo'
 
 module Circlemator
   class PrFinder
-    class BadResponseError < StandardError
-      def initialize(response)
-        super "Bad response from github: #{response.inspect}"
-      end
-    end
-
     def initialize(github_repo:, base_branch:, compare_branch:, sha:, **_opts)
       @github_repo = github_repo
       @base_branch = base_branch
@@ -19,7 +13,7 @@ module Circlemator
     def find_pr
       response = @github_repo.get '/pulls', query: { base: @base_branch }
       if response.code != 200
-        raise BadResponseError, response
+        raise ::Circlemator::GithubRepo::BadResponseError, response
       end
 
       prs = JSON.parse(response.body)

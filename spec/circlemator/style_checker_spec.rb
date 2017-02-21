@@ -37,6 +37,24 @@ RSpec.describe Circlemator::StyleChecker do
 
         expect(ENV['PULL_REQUEST_ID']).to eq pr_number.to_s
       end
+
+      context 'with the --clean option' do
+        let(:checker) do
+          Circlemator::StyleChecker.new github_repo: github_repo,
+                                        sha: 'abc123',
+                                        base_branch: 'master',
+                                        compare_branch: 'topic',
+                                        clean: true
+        end
+
+        it 'cleans existing comments before running pronto' do
+          allow(Pronto::Formatter::GithubPullRequestFormatter).to receive(:new)
+          allow(Pronto).to receive(:run)
+          expect(Circlemator::PrCleaner).to receive(:new).and_return double(clean!: nil)
+
+          subject
+        end
+      end
     end
 
     context 'without an open PR' do
