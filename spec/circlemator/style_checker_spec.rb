@@ -35,7 +35,7 @@ RSpec.describe Circlemator::StyleChecker do
 
         subject
 
-        expect(ENV['PULL_REQUEST_ID']).to eq pr_number.to_s
+        expect(ENV['PRONTO_PULL_REQUEST_ID']).to eq pr_number.to_s
       end
     end
 
