@@ -16,7 +16,7 @@ module Circlemator
     def check!
       pr_number, _ = PrFinder.new(@opts).find_pr
       if pr_number
-        ENV['PULL_REQUEST_ID'] = pr_number.to_s
+        ENV['PRONTO_PULL_REQUEST_ID'] = pr_number.to_s
         formatter = ::Pronto::Formatter::GithubPullRequestFormatter.new
       else
         formatter = ::Pronto::Formatter::GithubFormatter.new
