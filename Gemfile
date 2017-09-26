@@ -6,3 +6,4 @@ gemspec
 
 gem 'rf-stylez', github: 'rainforestapp/rf-stylez'
 gem 'rspec_junit_formatter'
+gem 'codacy-coverage', require: false
