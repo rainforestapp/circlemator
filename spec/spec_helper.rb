@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 require 'vcr'
-require 'codacy-coverage'
-
-Codacy::Reporter.start
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -28,6 +25,4 @@ end
 VCR.configure do |config|
   config.cassette_library_dir = 'fixtures/vcr_cassettes'
   config.hook_into :webmock
-  config.ignore_hosts 'api.codacy.com'
-  config.allow_http_connections_when_no_cassette = false
 end
