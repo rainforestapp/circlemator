@@ -53,4 +53,15 @@ RSpec.describe Circlemator::GithubRepo do
       github_repo.put('/pulls/123/merge', body: { foo: :bar })
     end
   end
+
+  describe '#post' do
+    it 'updates the path and adds the authorization' do
+      expect(described_class)
+        .to receive(:post).with("/#{user}/#{repo}/pulls/123/comments",
+                                body: { foo: :bar },
+                                basic_auth: { username: auth_token, password: 'x-oauth-basic' })
+
+      github_repo.post('/pulls/123/comments', body: { foo: :bar })
+    end
+  end
 end

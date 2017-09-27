@@ -33,6 +33,10 @@ module Circlemator
       self.class.put(fix_path(path), opts.merge(basic_auth: auth))
     end
 
+    def post(path, opts = {})
+      self.class.post(fix_path(path), opts.merge(basic_auth: auth))
+    end
+
     private
 
     def fix_path(path)

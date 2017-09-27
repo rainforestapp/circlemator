@@ -5,10 +5,11 @@ require_relative '../lib/circlemator/build_canceler'
 require_relative '../lib/circlemator/self_merger'
 require_relative '../lib/circlemator/github_repo'
 require_relative '../lib/circlemator/style_checker'
+require_relative '../lib/circlemator/pr_commenter'
 
 options = {}
 parser = OptionParser.new do |opts|
-  opts.banner = 'Usage: circlemator (self-merge|cancel-old) [options]'
+  opts.banner = 'Usage: circlemator (self-merge|cancel-old|comment) [text] [options]'
 
   opts.on('-bBRANCH', '--base-branch=BRANCH', 'Base branch for merging') do |b|
     options[:base_branch] = b
@@ -59,6 +60,7 @@ options[:user] = require_env 'CIRCLE_PROJECT_USERNAME'
 options[:repo] = require_env 'CIRCLE_PROJECT_REPONAME'
 options[:github_auth_token] ||= ENV['GITHUB_ACCESS_TOKEN']
 options[:github_auth_token] ||= ENV['GITHUB_AUTH_TOKEN']
+ENV['PRONTO_GITHUB_ACCESS_TOKEN'] ||= options[:github_auth_token]
 
 case ARGV[0]
 when 'self-merge'
@@ -83,6 +85,19 @@ when 'style-check'
   options[:github_repo] = Circlemator::GithubRepo.new(options)
 
   Circlemator::StyleChecker.new(options).check!
+when 'comment'
+  options[:sha] = require_env 'CIRCLE_SHA1'
+  options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
+  require_opt options, :github_auth_token
+  require_opt options, :base_branch
+  options[:github_repo] = Circlemator::GithubRepo.new(options)
+
+  unless ARGV[1]
+    puts 'Please add some text to the comment!'
+    exit 1
+  end
+
+  Circlemator::PrCommenter.new(options).comment ARGV[1]
 else
   puts parser
 end
