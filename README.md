@@ -57,7 +57,7 @@ You can comment on the open PR using the `comment` command:
 ```yml
 test:
   post:
-    - bundle exec circlemator comment 'A totally unnecessary comment'
+    - bundle exec circlemator comment 'A totally unnecessary comment' --base-branch=develop
 ```
 
 ### Style check
