@@ -50,6 +50,16 @@ to be set in CircleCI:
 - `CIRCLE_API_TOKEN`: Your CircleCI API token. (Can also be set with
   the `-t` option.)
 
+### Comment
+
+You can comment on the open PR using the `comment` command:
+
+```yml
+test:
+  post:
+    - bundle exec circlemator comment 'A totally unnecessary comment'
+```
+
 ### Style check
 
 Think of this as a poor man's HoundCI: it runs Rubocop (and/or more
