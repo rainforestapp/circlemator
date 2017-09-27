@@ -60,6 +60,7 @@ options[:user] = require_env 'CIRCLE_PROJECT_USERNAME'
 options[:repo] = require_env 'CIRCLE_PROJECT_REPONAME'
 options[:github_auth_token] ||= ENV['GITHUB_ACCESS_TOKEN']
 options[:github_auth_token] ||= ENV['GITHUB_AUTH_TOKEN']
+ENV['PRONTO_GITHUB_ACCESS_TOKEN'] ||= options[:github_auth_token]
 
 case ARGV[0]
 when 'self-merge'
