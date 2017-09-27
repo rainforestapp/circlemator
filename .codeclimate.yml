@@ -1,0 +1,10 @@
+prepare:
+  fetch:
+  - url: https://raw.githubusercontent.com/rainforestapp/rf-stylez/master/ruby/rubocop.yml
+    path: ".rubocop.yml"
+  - url: https://raw.githubusercontent.com/rainforestapp/rf-stylez/master/ruby/rubocop_lint.yml
+    path: "rubocop_lint.yml"
+
+engines:
+  rubocop:
+    enabled: true
