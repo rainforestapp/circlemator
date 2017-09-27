@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4629a31098bf4d49b8171f45dbbd06b3)](https://www.codacy.com/app/mail_57/circlemator?utm_source=github.com&utm_medium=referral&utm_content=rainforestapp/circlemator&utm_campaign=badger)
 # Circlemator [![Circle CI](https://circleci.com/gh/rainforestapp/circlemator.png?style=badge&circle-token=0b39cf33b52e34ef6bb29cf2f2a1c071fef3f26f)](https://circleci.com/gh/rainforestapp/circlemator)
 
 Circlemator is a bucket of tricks for working with CircleCI and Github
