@@ -6,4 +6,3 @@ gemspec
 
 gem 'rf-stylez'
 gem 'rspec_junit_formatter'
-gem 'rubocop', '~> 0.48.1'
