@@ -1,0 +1,67 @@
+version: 2
+
+jobs:
+  test:
+    docker:
+      - image: circleci/ruby:2.4.2
+    steps:
+      - checkout
+      - run:
+          name: Install env dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install postgresql-client cmake pkg-config
+      - restore_cache:
+          key: v1-rainforest-bundler-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Install Ruby gems
+          command: |
+            bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - save_cache:
+          key: v1-rainforest-bundler-{{ checksum "Gemfile.lock" }}
+          paths:
+            - ~/project/vendor/bundle
+      - run:
+          name: Cancel old builds
+          command: bundle exec exe/circlemator cancel-old
+      - run:
+          name: Test Circlemator
+          command: bundle exec exe/circlemator style-check --base-branch=master
+  push_to_rubygems:
+    docker:
+      - image: circleci/ruby:2.4.2
+    steps:
+      - checkout
+      - run:
+          name: Create .gem/credentials file
+          command: |
+            mkdir ~/.gem
+            echo "---
+              :rubygems_api_key: $RUBYGEMS_API_KEY
+            " > ~/.gem/credentials
+            chmod 600 ~/.gem/credentials
+      - run:
+          name: Release circlemator
+          command: |
+            gem build circlemator
+            gem push circlemator-*.gem
+
+workflows:
+  version: 2
+  test_and_release:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only:
+                - /.*/
+      - push_to_rubygems:
+          requires:
+            - test
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only:
+                - /^v.*/
