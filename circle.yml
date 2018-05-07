@@ -1,4 +1,0 @@
-test:
-  pre:
-    - bundle exec exe/circlemator cancel-old
-    - bundle exec exe/circlemator style-check --base-branch=master
