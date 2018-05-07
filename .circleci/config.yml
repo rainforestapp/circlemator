@@ -10,7 +10,7 @@ jobs:
           name: Install env dependencies
           command: |
             sudo apt-get update
-            sudo apt-get install postgresql-client cmake pkg-config
+            sudo apt-get install cmake pkg-config
       - restore_cache:
           key: v1-rainforest-bundler-{{ checksum "Gemfile.lock" }}
       - run:
