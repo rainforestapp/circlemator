@@ -34,4 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'webmock', '~> 1.22.6'
   spec.add_development_dependency 'rspec', '~> 3.4.0'
   spec.add_development_dependency 'guard-rspec', '~> 4.6.4'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'simplecov-html'
+  spec.add_development_dependency 'simplecov-lcov'
 end
