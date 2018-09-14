@@ -12,13 +12,13 @@ module Circlemator
       @base_branch = opts.fetch(:base_branch)
     end
 
-    def check_style
-      require 'pronto/rubocop'
+    def check_coverage
+      require 'pronto/undercover'
       run_pronto
     end
 
-    def check_coverage
-      require 'pronto/undercover'
+    def check_style
+      require 'pronto/rubocop'
       run_pronto
     end
 
