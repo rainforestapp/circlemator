@@ -8,7 +8,7 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
   [SimpleCov::Formatter::LcovFormatter, SimpleCov::Formatter::HTMLFormatter]
 )
 SimpleCov.start do
-  add_filter(/^\/spec\//)
+  add_filter(%r{/spec/})
 end
 
 RSpec.configure do |config|
