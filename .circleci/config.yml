@@ -27,6 +27,12 @@ jobs:
       - run:
           name: Test Circlemator
           command: bundle exec exe/circlemator style-check --base-branch=master
+      - run:
+          name: Run Specs
+          command: bundle exec rspec
+      - run:
+          name: Test Code Coverage
+          command: bundle exec exe/circlemator test-coverage --base-branch=master
   push_to_rubygems:
     docker:
       - image: circleci/ruby:2.4.2

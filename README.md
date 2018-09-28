@@ -64,7 +64,7 @@ test:
 
 Think of this as a poor man's HoundCI: it runs Rubocop (and/or more
 linters/checkers TBD) and comments on the Github pull request using
-the excellent [Pronto](https://github.com/mmozuras/pronto). Use it
+the excellent [Pronto](https://github.com/prontolabs/pronto). Use it
 like so:
 
 ```yml
@@ -81,6 +81,53 @@ It probably makes sense to put `style-check` in either the `pre` or
 `override` steps.)
 
 `style-check` requires the following environment variable to be set:
+
+- `GITHUB_ACCESS_TOKEN`: A Github API auth token for a user with commit
+  access to your repo. (Can also be set with the `-g` option.)
+
+### Code coverage check
+
+The code coverage check looks for untested lines in the pull request using [Pronto](https://github.com/prontolabs/pronto) and [Undercover](https://github.com/grodowski/undercover) and posts warnings as PR comments.
+
+Set up code coverage reporting with SimpleCov to start finding untested code after tests have been executed:
+
+```rb
+# Gemfile
+group :test do
+  gem 'simplecov'
+  gem 'simplecov-lcov'
+end
+```
+
+```rb
+# spec_helper.rb (or test_helper.rb)
+
+require 'simplecov'
+require 'simplecov-lcov'
+SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
+SimpleCov.start do
+  add_filter(/^\/spec\//) # For RSpec
+
+  add_filter(/^\/test\//) # For Minitest
+end
+
+require 'your_app'
+
+# ...
+```
+
+Then use it like this:
+
+```yml
+test:
+  post:
+    - bundle exec circlemator test-coverage --base-branch=develop
+```
+
+Circlemator reads additional config from [.pronto.yml](https://github.com/grodowski/pronto-undercover#configuring)
+
+`test-coverage` requires the following environment variable to be set:
 
 - `GITHUB_ACCESS_TOKEN`: A Github API auth token for a user with commit
   access to your repo. (Can also be set with the `-g` option.)

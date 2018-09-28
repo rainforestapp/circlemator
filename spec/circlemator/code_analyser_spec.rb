@@ -1,10 +1,10 @@
 # frozen_string_literal: true
-require 'circlemator/style_checker'
+require 'circlemator/code_analyser'
 require 'circlemator/pr_finder'
 require 'circlemator/github_repo'
 require 'pronto'
 
-RSpec.describe Circlemator::StyleChecker do
+RSpec.describe Circlemator::CodeAnalyser do
   describe 'check!' do
     let(:github_repo) do
       Circlemator::GithubRepo.new user: 'rainforestapp',
@@ -12,14 +12,14 @@ RSpec.describe Circlemator::StyleChecker do
                                   github_auth_token: 'abc123'
     end
     let(:checker) do
-      Circlemator::StyleChecker.new github_repo: github_repo,
+      Circlemator::CodeAnalyser.new github_repo: github_repo,
                                     sha: 'abc123',
                                     base_branch: 'master',
                                     compare_branch: 'topic'
     end
     let(:pronto_double) { double }
 
-    subject { checker.check! }
+    subject { checker.check_style }
 
     context 'with an open PR' do
       let(:pr_number) { 12345 }

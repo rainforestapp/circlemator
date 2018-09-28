@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 require 'vcr'
 
+require 'simplecov'
+require 'simplecov-lcov'
+SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
+  [SimpleCov::Formatter::LcovFormatter, SimpleCov::Formatter::HTMLFormatter]
+)
+SimpleCov.start do
+  add_filter(%r{/spec/})
+end
+
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true

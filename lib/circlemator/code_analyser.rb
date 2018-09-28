@@ -2,27 +2,40 @@
 require 'httparty'
 require 'json'
 require 'pronto'
-require 'pronto/rubocop'
 require 'pronto/commentator'
 require 'circlemator/pr_finder'
 
 module Circlemator
-  class StyleChecker
+  class CodeAnalyser
     def initialize(opts)
       @opts = opts
       @base_branch = opts.fetch(:base_branch)
     end
 
-    def check!
+    def check_coverage
+      require 'pronto/undercover'
+      run_pronto
+    end
+
+    def check_style
+      require 'pronto/rubocop'
+      run_pronto
+    end
+
+    private
+
+    def run_pronto
+      Pronto.run("origin/#{@base_branch}", '.', formatter)
+    end
+
+    def formatter
       pr_number, _ = PrFinder.new(@opts).find_pr
       if pr_number
         ENV['PRONTO_PULL_REQUEST_ID'] = pr_number.to_s
-        formatter = ::Pronto::Formatter::GithubPullRequestFormatter.new
+        Pronto::Formatter::GithubPullRequestFormatter.new
       else
-        formatter = ::Pronto::Formatter::GithubFormatter.new
+        Pronto::Formatter::GithubFormatter.new
       end
-
-      ::Pronto.run("origin/#{@base_branch}", '.', formatter)
     end
   end
 end

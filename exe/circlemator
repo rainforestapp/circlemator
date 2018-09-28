@@ -4,7 +4,7 @@ require 'optparse'
 require_relative '../lib/circlemator/build_canceler'
 require_relative '../lib/circlemator/self_merger'
 require_relative '../lib/circlemator/github_repo'
-require_relative '../lib/circlemator/style_checker'
+require_relative '../lib/circlemator/code_analyser'
 require_relative '../lib/circlemator/pr_commenter'
 
 options = {}
@@ -84,7 +84,15 @@ when 'style-check'
   require_opt options, :base_branch
   options[:github_repo] = Circlemator::GithubRepo.new(options)
 
-  Circlemator::StyleChecker.new(options).check!
+  Circlemator::CodeAnalyser.new(options).check_style
+when 'test-coverage'
+  options[:sha] = require_env 'CIRCLE_SHA1'
+  options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
+  require_opt options, :github_auth_token
+  require_opt options, :base_branch
+  options[:github_repo] = Circlemator::GithubRepo.new(options)
+
+  Circlemator::CodeAnalyser.new(options).check_coverage
 when 'comment'
   options[:sha] = require_env 'CIRCLE_SHA1'
   options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'

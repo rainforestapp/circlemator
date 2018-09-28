@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'pronto', '~> 0.9.5'
   spec.add_dependency 'pronto-rubocop', '~> 0.9.0'
   spec.add_dependency 'pronto-commentator', '~> 0'
+  spec.add_dependency 'pronto-undercover', '~> 0.1'
 
   spec.add_development_dependency 'bundler', '>= 1.9'
   spec.add_development_dependency 'rake', '~> 10.0'
@@ -33,4 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'webmock', '~> 1.22.6'
   spec.add_development_dependency 'rspec', '~> 3.4.0'
   spec.add_development_dependency 'guard-rspec', '~> 4.6.4'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'simplecov-html'
+  spec.add_development_dependency 'simplecov-lcov'
 end
