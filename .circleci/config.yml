@@ -7,6 +7,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Ensure CIRCLE_BRANCH
+          command: |
+            if [ -z $CIRCLE_BRANCH ]; then
+              echo "export CIRCLE_BRANCH=$CIRCLE_TAG" >> $BASH_ENV
+            fi
+      - run:
           name: Install env dependencies
           command: |
             sudo apt-get update
