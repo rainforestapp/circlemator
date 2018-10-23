@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    circlemator (0.4.1)
+    circlemator (0.4.2)
       httparty (~> 0.13.7)
       pronto (~> 0.9.5)
       pronto-commentator (~> 0)
@@ -21,7 +21,7 @@ GEM
     docile (1.3.1)
     faraday (0.15.3)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.18)
+    ffi (1.9.25)
     formatador (0.2.5)
     gitlab (4.3.0)
       httparty
