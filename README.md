@@ -132,6 +132,28 @@ Circlemator reads additional config from [.pronto.yml](https://github.com/grodow
 - `GITHUB_ACCESS_TOKEN`: A Github API auth token for a user with commit
   access to your repo. (Can also be set with the `-g` option.)
 
+### Security check
+
+The security check looks for common security errors using [Pronto](https://github.com/prontolabs/pronto) and [Brakeman](https://github.com/presidentbeef/brakeman) Static Application Security Testing and post warnings as PR comments.
+
+```yml
+test:
+  pre:
+    - bundle exec circlemator security-check --base-branch=develop
+```
+
+(Note: use local branch names, like `develop` instead of
+`origin/develop`; `origin` will be prepended for running pronto as
+necessary.)
+
+It probably makes sense to put `security-check` in either the `pre` or
+`override` steps.)
+
+`security-check` requires the following environment variable to be set:
+
+- `GITHUB_ACCESS_TOKEN`: A Github API auth token for a user with commit
+  access to your repo. (Can also be set with the `-g` option.)
+
 ### Self-merge release branch
 
 Preamble: at Rainforest, our process for getting code into production

@@ -22,6 +22,11 @@ module Circlemator
       run_pronto
     end
 
+    def check_security
+      require 'pronto/brakeman'
+      run_pronto
+    end
+
     private
 
     def run_pronto
