@@ -93,14 +93,6 @@ when 'test-coverage'
   options[:github_repo] = Circlemator::GithubRepo.new(options)
 
   Circlemator::CodeAnalyser.new(options).check_coverage
-when 'test-security'
-  options[:sha] = require_env 'CIRCLE_SHA1'
-  options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
-  require_opt options, :github_auth_token
-  require_opt options, :base_branch
-  options[:github_repo] = Circlemator::GithubRepo.new(options)
-
-  Circlemator::CodeAnalyser.new(options).check_security
 when 'comment'
   options[:sha] = require_env 'CIRCLE_SHA1'
   options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
