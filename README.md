@@ -139,17 +139,17 @@ The security check looks for common security errors using [Pronto](https://githu
 ```yml
 test:
   pre:
-    - bundle exec circlemator security-check --base-branch=develop
+    - bundle exec circlemator test-security --base-branch=develop
 ```
 
 (Note: use local branch names, like `develop` instead of
 `origin/develop`; `origin` will be prepended for running pronto as
 necessary.)
 
-It probably makes sense to put `security-check` in either the `pre` or
+It probably makes sense to put `test-security` in either the `pre` or
 `override` steps.)
 
-`security-check` requires the following environment variable to be set:
+`test-security` requires the following environment variable to be set:
 
 - `GITHUB_ACCESS_TOKEN`: A Github API auth token for a user with commit
   access to your repo. (Can also be set with the `-g` option.)
