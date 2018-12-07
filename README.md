@@ -183,5 +183,5 @@ https://github.com/rainforestapp/circlemator.
 
 ### Releasing
 
-- Make sure you're an owner on rubygems.org
-- `rake release`
+Merge to master, Docker will build a new docker image and release it on Docker
+hub at https://hub.docker.com/r/rainforestapp/circlemator/
