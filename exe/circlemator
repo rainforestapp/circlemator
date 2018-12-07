@@ -9,7 +9,7 @@ require_relative '../lib/circlemator/pr_commenter'
 
 options = {}
 parser = OptionParser.new do |opts|
-  opts.banner = 'Usage: circlemator (self-merge|cancel-old|comment) [text] [options]'
+  opts.banner = 'Usage: circlemator (self-merge|cancel-old|comment|test-coverage|test-security|style-check) [text] [options]'
 
   opts.on('-bBRANCH', '--base-branch=BRANCH', 'Base branch for merging') do |b|
     options[:base_branch] = b
