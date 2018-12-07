@@ -5,44 +5,30 @@ used internally at [Rainforest QA](http://www.rainforestqa.com).
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'circlemator', require: false
-```
-
-Then run `bundle` and check in the resulting Gemfile.lock. That should
-be enough, really.
+Install the docker image with `docker pull rainforestapp/circlemator`.
 
 ## Usage
 
-Circlemator tasks are designed to be added to your circle.yml file
-like so:
-
-```yml
-- bundle exec circlemator <task> [options]
 ```
-
-Different tasks require different options/placement in your
-circle.yml.
+docker run rainforestapp/circlemator style-check --base-branch=develop
+docker run rainforestapp/circlemator test-coverage --base-branch=develop
+docker run rainforestapp/circlemator test-security --base-branch=develop
+docker run rainforestapp/circlemator self-merge --base-branch=master --compare-branch=develop
+docker run rainforestapp/circlemator cancel-old
+docker run rainforestapp/circlemator comment 'A totally unnecessary comment' --base-branch=develop
+```
 
 ## Tasks
 
-### Cancel old builds
+### Cancel old builds (`cancel-old`)
 
 CircleCI starts a build every time you push to Github. That's usually
 a good thing, but if you have a big test suite it can be annoying when
 your build queue gets gummed up running builds on out-of-date
 commits. To clear things up, the `cancel-old` task cancels all builds
 that are not at the head of their branch. It should be in your
-circle.yml before your tests are run but after the dependencies have
-been fetched, for example:
-
-```yml
-test:
-  pre:
-    - bundle exec circlemator cancel-old
-```
+`circle.yml` before your tests are run but after the dependencies have
+been fetched.
 
 In order for this to work, you need the following environment variable
 to be set in CircleCI:
@@ -50,14 +36,12 @@ to be set in CircleCI:
 - `CIRCLE_API_TOKEN`: Your CircleCI API token. (Can also be set with
   the `-t` option.)
 
-### Comment
+### Comment (`comment`)
 
 You can comment on the open PR using the `comment` command:
 
-```yml
-test:
-  post:
-    - bundle exec circlemator comment 'A totally unnecessary comment' --base-branch=develop
+```
+docker run rainforestapp/circlemator comment 'A totally unnecessary comment' --base-branch=develop
 ```
 
 ### Style check
@@ -67,10 +51,8 @@ linters/checkers TBD) and comments on the Github pull request using
 the excellent [Pronto](https://github.com/prontolabs/pronto). Use it
 like so:
 
-```yml
-test:
-  pre:
-    - bundle exec circlemator style-check --base-branch=develop
+```
+docker run rainforestapp/circlemator style-check --base-branch=develop
 ```
 
 (Note: use local branch names, like `develop` instead of
@@ -119,10 +101,8 @@ require 'your_app'
 
 Then use it like this:
 
-```yml
-test:
-  post:
-    - bundle exec circlemator test-coverage --base-branch=develop
+```
+docker run rainforestapp/circlemator test-coverage --base-branch=develop
 ```
 
 Circlemator reads additional config from [.pronto.yml](https://github.com/grodowski/pronto-undercover#configuring)
@@ -136,10 +116,8 @@ Circlemator reads additional config from [.pronto.yml](https://github.com/grodow
 
 The security check looks for common security errors using [Pronto](https://github.com/prontolabs/pronto) and [Brakeman](https://github.com/presidentbeef/brakeman) Static Application Security Testing and post warnings as PR comments.
 
-```yml
-test:
-  pre:
-    - bundle exec circlemator test-security --base-branch=develop
+```
+docker run rainforestapp/circlemator test-security --base-branch=develop
 ```
 
 (Note: use local branch names, like `develop` instead of
@@ -176,12 +154,7 @@ To use `self-merge`, add something like the following to your
 circle.yml:
 
 ```yml
-deployment:
-  staging:
-    branch: develop
-    commands:
-      <any commands you would normally run>
-      - bundle exec circlemator self-merge --base-branch=master --compare-branch=develop
+docker run rainforestapp/circlemator self-merge --base-branch=master --compare-branch=develop
 ```
 
 Swap out `develop` and `master` as necessary to fit your workflow. Be
