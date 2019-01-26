@@ -139,16 +139,11 @@ looks like this:
 
 1. Push to feature branch pull request.
 2. Run unit tests and get code review (repeat 1-2 as necessary).
-3. Merge feature branch to `develop`.
-4. Open release pull request from `develop` to `master`.
-5. Run unit tests + [Rainforest](http://www.rainforestqa.com) against `develop`.
-6. Merge `develop` into `master` if everything's green.
-7. Deploy from `master`.
+3. Merge feature branch to `master`.
+4. Deploy from `master`.
 
-Out of these, steps 1, 2, 3, and 4 require manual intervention, but
-everything else should be automatic! The `self-merge` task is designed
-to take care of step 6 (the rest is handled by CircleCI out of the
-box).
+Out of these, steps 1, 2, and 3 require manual intervention, but
+everything else should be automatically handled by CircleCI!
 
 To use `self-merge`, add something like the following to your
 circle.yml:
