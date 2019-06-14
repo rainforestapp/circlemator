@@ -17,6 +17,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install cmake pkg-config
+            gem install bundler
       - restore_cache:
           key: v1-rainforest-bundler-{{ checksum "Gemfile.lock" }}
       - run:
