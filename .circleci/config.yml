@@ -3,7 +3,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/ruby:2.4.6
+      - image: circleci/ruby:2.6
     steps:
       - checkout
       - run:
@@ -44,7 +44,7 @@ jobs:
           command: bundle exec exe/circlemator test-security --base-branch=master
   push_to_rubygems:
     docker:
-      - image: circleci/ruby:2.4.2
+      - image: circleci/ruby:2.6
     steps:
       - checkout
       - run:
