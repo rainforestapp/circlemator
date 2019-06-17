@@ -13,4 +13,7 @@ RUN gem install bundler
 COPY . .
 RUN bundle install
 
-ENTRYPOINT ["bundle exec circlemator"]
+# makes the circlemator binstub accessible outside this bundle
+RUN rake install:local
+
+ENTRYPOINT ["circlemator"]
