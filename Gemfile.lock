@@ -92,7 +92,7 @@ GEM
     public_suffix (3.0.3)
     rainbow (2.2.2)
       rake
-    rake (10.5.0)
+    rake (12.3.2)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
@@ -156,7 +156,7 @@ DEPENDENCIES
   bundler (>= 1.9)
   circlemator!
   guard-rspec (~> 4.7.3)
-  rake (~> 10.0)
+  rake (~> 12.3)
   rf-stylez
   rspec (~> 3.4.0)
   rspec_junit_formatter
