@@ -3,7 +3,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/ruby:2.4.6
+      - image: circleci/ruby:2.5
     steps:
       - checkout
       - run:
@@ -17,6 +17,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install cmake pkg-config
+            gem install bundler
       - restore_cache:
           key: v1-rainforest-bundler-{{ checksum "Gemfile.lock" }}
       - run:
@@ -44,7 +45,7 @@ jobs:
           command: bundle exec exe/circlemator test-security --base-branch=master
   push_to_rubygems:
     docker:
-      - image: circleci/ruby:2.4.2
+      - image: circleci/ruby:2.5
     steps:
       - checkout
       - run:
