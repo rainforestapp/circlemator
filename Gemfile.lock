@@ -167,5 +167,8 @@ DEPENDENCIES
   vcr (~> 4.0.0)!
   webmock (~> 3.5.1)!
 
+RUBY VERSION
+   ruby 2.6.3p62
+
 BUNDLED WITH
    2.0.2
