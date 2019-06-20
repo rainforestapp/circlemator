@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rainforestapp/rf-stylez.git
-  revision: 58cdf9585ee39457e7b2d1bfd06c98755f8142b0
+  revision: a685d4c2f81fe2384c305bd660066b0e1e6b01ab
   branch: dependabot/bundler/rubocop-gte-0.59-and-lt-0.72
   specs:
     rf-stylez (0.2.21)
