@@ -153,19 +153,19 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (>= 1.9)
+  bundler (>= 1.9)!
   circlemator!
-  guard-rspec (~> 4.7.3)
-  rake (~> 10.0)
-  rf-stylez
-  rspec (~> 3.4.0)
-  rspec_junit_formatter
-  rubocop
-  simplecov
-  simplecov-html
-  simplecov-lcov
-  vcr (~> 4.0.0)
-  webmock (~> 3.5.1)
+  guard-rspec (~> 4.7.3)!
+  rake (~> 10.0)!
+  rf-stylez!
+  rspec (~> 3.4.0)!
+  rspec_junit_formatter!
+  rubocop!
+  simplecov!
+  simplecov-html!
+  simplecov-lcov!
+  vcr (~> 4.0.0)!
+  webmock (~> 3.5.1)!
 
 BUNDLED WITH
    2.0.2

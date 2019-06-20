@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-source 'https://rubygems.org'
 
-# Specify your gem's dependencies in circlemator.gemspec
-gemspec
+source 'https://rubygems.org' do
+  gem 'rf-stylez'
+  gem 'rspec_junit_formatter'
 
-gem 'rf-stylez'
-gem 'rspec_junit_formatter'
+  gemspec
+end
