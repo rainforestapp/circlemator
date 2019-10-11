@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    circlemator (0.6.0)
+    circlemator (0.7.0)
       httparty (~> 0.13.7)
       pronto (~> 0.9.5)
       pronto-brakeman (~> 0.9.1)
