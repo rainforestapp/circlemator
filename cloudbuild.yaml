@@ -1,0 +1,13 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    docker build -t "gcr.io/$PROJECT_ID/circlemator:$COMMIT_SHA" .
+
+    if [ "$BRANCH_NAME" == "master" ]; then
+      docker tag "gcr.io/$PROJECT_ID/circlemator:$COMMIT_SHA" gcr.io/$PROJECT_ID/circlemator:latest
+    fi
+images:
+- 'gcr.io/$PROJECT_ID/circlemator'
