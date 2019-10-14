@@ -1,4 +1,9 @@
 steps:
+- name: gcr.io/cloud-builders/docker
+  entrypoint: 'bash'
+  args: ['-c', 'rm -rf .* * || true']
+- name: gcr.io/cloud-builders/git
+  args: ['clone', 'https://github.com/rainforestapp/circlemator', '-b', "$BRANCH_NAME", '.']
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
   args:
