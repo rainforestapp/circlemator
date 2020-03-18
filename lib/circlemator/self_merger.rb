@@ -15,7 +15,7 @@ module Circlemator
     end
 
     def merge!
-      pr_number, pr_url = PrFinder.new(@opts).find_pr
+      pr_number, pr_url = PrFinder.new(**@opts).find_pr
       return if pr_number.nil? || pr_url.nil?
 
       response = @github_repo.put "#{pr_url}/merge",

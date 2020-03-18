@@ -13,7 +13,7 @@ module Circlemator
     end
 
     def comment(text)
-      _, pr_url = PrFinder.new(@opts).find_pr
+      _, pr_url = PrFinder.new(**@opts).find_pr
       raise 'PR not found!' unless pr_url
 
       response = @github_repo.post "#{pr_url}/reviews", body: { commit_id: @sha,
