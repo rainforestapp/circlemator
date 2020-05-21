@@ -1,4 +1,4 @@
-FROM ruby:2.7.0
+FROM ruby:2.7.1
 RUN apt-get update -y && apt-get install -y cmake
 
 # Set default locale for Ruby to avoid encoding errors
