@@ -110,9 +110,10 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     rexml (3.2.4)
-    rf-stylez (0.6.0)
+    rf-stylez (0.7.1.pre)
       rubocop (>= 0.59, < 0.81)
       rubocop-rails (~> 2.5.0)
+      rubocop-rspec (~> 1.39.0)
       semantic_versioning (~> 0.2)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
@@ -141,6 +142,8 @@ GEM
       activesupport
       rack (>= 1.1)
       rubocop (>= 0.72.0)
+    rubocop-rspec (1.39.0)
+      rubocop (>= 0.68.1)
     ruby-progressbar (1.10.1)
     rugged (0.28.4.1)
     safe_yaml (1.0.5)
@@ -181,7 +184,7 @@ DEPENDENCIES
   circlemator!
   guard-rspec (~> 4.7.3)
   rake (~> 13.0)
-  rf-stylez
+  rf-stylez (= 0.7.1.pre)
   rspec (~> 3.9.0)
   rspec_junit_formatter
   rubocop
@@ -192,4 +195,4 @@ DEPENDENCIES
   webmock (~> 3.8.3)
 
 BUNDLED WITH
-   2.1.2
+   2.1.4
