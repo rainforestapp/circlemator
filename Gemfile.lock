@@ -32,6 +32,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     ffi (1.11.1)
     formatador (0.2.5)
+    get_env (0.2.0)
     gitlab (4.14.1)
       httparty (~> 0.14, >= 0.14.0)
       terminal-table (~> 1.5, >= 1.5.1)
@@ -110,9 +111,11 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     rexml (3.2.4)
-    rf-stylez (0.6.0)
+    rf-stylez (0.7.2)
+      get_env (~> 0.2.0)
       rubocop (>= 0.59, < 0.81)
       rubocop-rails (~> 2.5.0)
+      rubocop-rspec (~> 1.39.0)
       semantic_versioning (~> 0.2)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
@@ -141,6 +144,8 @@ GEM
       activesupport
       rack (>= 1.1)
       rubocop (>= 0.72.0)
+    rubocop-rspec (1.39.0)
+      rubocop (>= 0.68.1)
     ruby-progressbar (1.10.1)
     rugged (0.28.4.1)
     safe_yaml (1.0.5)
@@ -192,4 +197,4 @@ DEPENDENCIES
   webmock (~> 3.8.3)
 
 BUNDLED WITH
-   2.1.2
+   2.1.4
