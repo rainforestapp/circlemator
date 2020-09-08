@@ -178,5 +178,4 @@ https://github.com/rainforestapp/circlemator.
 
 ### Releasing
 
-Merge to master, Docker will build a new docker image and release it on Docker
-hub at https://hub.docker.com/r/rainforestapp/circlemator/
+Merge to master, Google will build a new docker image and release it on GCR.io at https://gcr.io/rf-public-images/circlemator
