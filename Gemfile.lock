@@ -175,7 +175,7 @@ GEM
       rugged (>= 0.27, < 1.1)
     unicode-display_width (1.7.0)
     vcr (6.0.0)
-    webmock (3.8.3)
+    webmock (3.9.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -197,7 +197,7 @@ DEPENDENCIES
   simplecov-html
   simplecov-lcov
   vcr (~> 6.0.0)
-  webmock (~> 3.8.3)
+  webmock (~> 3.9.1)
 
 BUNDLED WITH
    2.1.4
