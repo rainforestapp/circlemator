@@ -18,7 +18,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    addressable (2.7.0)
+    addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
     brakeman (4.8.0)
@@ -178,8 +178,8 @@ GEM
       rugged (>= 0.27, < 1.1)
     unicode-display_width (1.7.0)
     vcr (6.0.0)
-    webmock (3.13.0)
-      addressable (>= 2.3.6)
+    webmock (3.14.0)
+      addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     zeitwerk (2.4.2)
@@ -200,7 +200,7 @@ DEPENDENCIES
   simplecov-html
   simplecov-lcov
   vcr (~> 6.0.0)
-  webmock (~> 3.13.0)
+  webmock (~> 3.14.0)
 
 BUNDLED WITH
    2.1.4
