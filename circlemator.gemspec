@@ -22,11 +22,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'httparty', '>= 0.13.7', '< 0.19.0'
-  spec.add_dependency 'pronto', '~> 0.9.5'
-  spec.add_dependency 'pronto-rubocop', '~> 0.9.0'
+  spec.add_dependency 'pronto', '~> 0.11.0'
+  spec.add_dependency 'pronto-rubocop', '~> 0.11.0'
   spec.add_dependency 'pronto-commentator', '~> 0'
   spec.add_dependency 'pronto-undercover', '~> 0.1'
-  spec.add_dependency 'pronto-brakeman', '~> 0.9.1'
+  spec.add_dependency 'pronto-brakeman', '~> 0.11.0'
 
   spec.add_development_dependency 'bundler', '>= 1.9'
   spec.add_development_dependency 'rake', '~> 13.0'
