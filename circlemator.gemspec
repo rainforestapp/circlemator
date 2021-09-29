@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'httparty', '>= 0.13.7', '< 0.19.0'
+  spec.add_dependency 'httparty', '>= 0.13.7', '< 0.21.0'
   spec.add_dependency 'pronto', '~> 0.11.0'
   spec.add_dependency 'pronto-rubocop', '~> 0.11.0'
   spec.add_dependency 'pronto-commentator', '~> 0'
