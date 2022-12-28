@@ -1,33 +1,35 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
-require 'optparse'
-require_relative '../lib/circlemator/build_canceler'
-require_relative '../lib/circlemator/self_merger'
-require_relative '../lib/circlemator/github_repo'
-require_relative '../lib/circlemator/code_analyser'
-require_relative '../lib/circlemator/pr_commenter'
+
+require "optparse"
+require_relative "../lib/circlemator/build_canceler"
+require_relative "../lib/circlemator/self_merger"
+require_relative "../lib/circlemator/github_repo"
+require_relative "../lib/circlemator/code_analyser"
+require_relative "../lib/circlemator/pr_commenter"
 
 options = {}
 parser = OptionParser.new do |opts|
-  opts.banner = 'Usage: circlemator (self-merge|cancel-old|comment|test-coverage|test-security|style-check) [text] [options]'
+  opts.banner =
+    "Usage: circlemator (self-merge|cancel-old|comment|test-coverage|test-security|style-check) [text] [options]"
 
-  opts.on('-bBRANCH', '--base-branch=BRANCH', 'Base branch for merging') do |b|
+  opts.on("-bBRANCH", "--base-branch=BRANCH", "Base branch for merging") do |b|
     options[:base_branch] = b
   end
 
-  opts.on('-cBRANCH', '--compare-branch=BRANCH', 'Compare branch for merging') do |b|
+  opts.on("-cBRANCH", "--compare-branch=BRANCH", "Compare branch for merging") do |b|
     options[:compare_branch] = b
   end
 
-  opts.on('-gTOKEN', '--github-auth-token=TOKEN', 'Github auth token') do |t|
+  opts.on("-gTOKEN", "--github-auth-token=TOKEN", "Github auth token") do |t|
     options[:github_auth_token] = t
   end
 
-  opts.on('-tTOKEN', '--circle-api-token=TOKEN', 'CircleCI API token') do |t|
+  opts.on("-tTOKEN", "--circle-api-token=TOKEN", "CircleCI API token") do |t|
     options[:circle_api_token] = t
   end
 
-  opts.on('-h', '--help', 'Print this help message') do
+  opts.on("-h", "--help", "Print this help message") do
     puts opts
     exit
   end
@@ -51,20 +53,20 @@ def require_opt(opts, key)
   end
 end
 
-if !ENV['CIRCLECI']
-  puts 'Cirlemator should only be run from CircleCI'
+if !ENV["CIRCLECI"]
+  puts "Cirlemator should only be run from CircleCI"
   exit 1
 end
 
-options[:user] = require_env 'CIRCLE_PROJECT_USERNAME'
-options[:repo] = require_env 'CIRCLE_PROJECT_REPONAME'
-options[:github_auth_token] ||= ENV['GITHUB_ACCESS_TOKEN']
-options[:github_auth_token] ||= ENV['GITHUB_AUTH_TOKEN']
-ENV['PRONTO_GITHUB_ACCESS_TOKEN'] ||= options[:github_auth_token]
+options[:user] = require_env "CIRCLE_PROJECT_USERNAME"
+options[:repo] = require_env "CIRCLE_PROJECT_REPONAME"
+options[:github_auth_token] ||= ENV["GITHUB_ACCESS_TOKEN"]
+options[:github_auth_token] ||= ENV["GITHUB_AUTH_TOKEN"]
+ENV["PRONTO_GITHUB_ACCESS_TOKEN"] ||= options[:github_auth_token]
 
 case ARGV[0]
-when 'self-merge'
-  options[:sha] = require_env 'CIRCLE_SHA1'
+when "self-merge"
+  options[:sha] = require_env "CIRCLE_SHA1"
   require_opt options, :github_auth_token
   require_opt options, :base_branch
   require_opt options, :compare_branch
@@ -75,9 +77,9 @@ when 'self-merge'
   )
 
   Circlemator::SelfMerger.new(options).merge!
-when 'cancel-old'
-  options[:current_build] = require_env('CIRCLE_BUILD_NUM').to_i
-  options[:circle_api_token] ||= ENV['CIRCLE_API_TOKEN']
+when "cancel-old"
+  options[:current_build] = require_env("CIRCLE_BUILD_NUM").to_i
+  options[:circle_api_token] ||= ENV["CIRCLE_API_TOKEN"]
   require_opt options, :circle_api_token
 
   Circlemator::BuildCanceler.new(
@@ -86,9 +88,9 @@ when 'cancel-old'
     current_build: options[:current_build],
     circle_api_token: options[:circle_api_token]
   ).cancel_old_builds!
-when 'style-check'
-  options[:sha] = require_env 'CIRCLE_SHA1'
-  options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
+when "style-check"
+  options[:sha] = require_env "CIRCLE_SHA1"
+  options[:compare_branch] ||= require_env "CIRCLE_BRANCH"
   require_opt options, :github_auth_token
   require_opt options, :base_branch
   options[:github_repo] = Circlemator::GithubRepo.new(
@@ -98,9 +100,9 @@ when 'style-check'
   )
 
   Circlemator::CodeAnalyser.new(options).check_style
-when 'test-coverage'
-  options[:sha] = require_env 'CIRCLE_SHA1'
-  options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
+when "test-coverage"
+  options[:sha] = require_env "CIRCLE_SHA1"
+  options[:compare_branch] ||= require_env "CIRCLE_BRANCH"
   require_opt options, :github_auth_token
   require_opt options, :base_branch
   options[:github_repo] = Circlemator::GithubRepo.new(
@@ -110,9 +112,9 @@ when 'test-coverage'
   )
 
   Circlemator::CodeAnalyser.new(options).check_coverage
-when 'test-security'
-  options[:sha] = require_env 'CIRCLE_SHA1'
-  options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
+when "test-security"
+  options[:sha] = require_env "CIRCLE_SHA1"
+  options[:compare_branch] ||= require_env "CIRCLE_BRANCH"
   require_opt options, :github_auth_token
   require_opt options, :base_branch
   options[:github_repo] = Circlemator::GithubRepo.new(
@@ -122,9 +124,9 @@ when 'test-security'
   )
 
   Circlemator::CodeAnalyser.new(options).check_security
-when 'comment'
-  options[:sha] = require_env 'CIRCLE_SHA1'
-  options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
+when "comment"
+  options[:sha] = require_env "CIRCLE_SHA1"
+  options[:compare_branch] ||= require_env "CIRCLE_BRANCH"
   require_opt options, :github_auth_token
   require_opt options, :base_branch
   options[:github_repo] = Circlemator::GithubRepo.new(
@@ -134,7 +136,7 @@ when 'comment'
   )
 
   unless ARGV[1]
-    puts 'Please add some text to the comment!'
+    puts "Please add some text to the comment!"
     exit 1
   end
 

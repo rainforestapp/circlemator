@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-require 'vcr'
 
-require 'simplecov'
-require 'simplecov-lcov'
+require "vcr"
+
+require "simplecov"
+require "simplecov-lcov"
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
   [SimpleCov::Formatter::LcovFormatter, SimpleCov::Formatter::HTMLFormatter]
@@ -25,7 +26,7 @@ RSpec.configure do |config|
   config.disable_monkey_patching!
   config.warnings = true
   if config.files_to_run.one?
-    config.default_formatter = 'doc'
+    config.default_formatter = "doc"
   end
   config.profile_examples = 10
   config.order = :random
@@ -33,6 +34,6 @@ RSpec.configure do |config|
 end
 
 VCR.configure do |config|
-  config.cassette_library_dir = 'fixtures/vcr_cassettes'
+  config.cassette_library_dir = "fixtures/vcr_cassettes"
   config.hook_into :webmock
 end

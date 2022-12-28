@@ -1,53 +1,54 @@
 # frozen_string_literal: true
-require 'circlemator/code_analyser'
-require 'circlemator/pr_finder'
-require 'circlemator/github_repo'
-require 'pronto'
+
+require "circlemator/code_analyser"
+require "circlemator/pr_finder"
+require "circlemator/github_repo"
+require "pronto"
 
 RSpec.describe Circlemator::CodeAnalyser do
-  describe 'check!' do
+  describe "check!" do
     let(:github_repo) do
-      Circlemator::GithubRepo.new user: 'rainforestapp',
-                                  repo: 'circlemator',
-                                  github_auth_token: 'abc123'
+      Circlemator::GithubRepo.new user: "rainforestapp",
+                                  repo: "circlemator",
+                                  github_auth_token: "abc123"
     end
     let(:checker) do
       Circlemator::CodeAnalyser.new github_repo: github_repo,
-                                    sha: 'abc123',
-                                    base_branch: 'master',
-                                    compare_branch: 'topic'
+                                    sha: "abc123",
+                                    base_branch: "master",
+                                    compare_branch: "topic"
     end
     let(:pronto_double) { double }
 
     subject { checker.check_style }
 
-    context 'with an open PR' do
+    context "with an open PR" do
       let(:pr_number) { 12345 }
 
       before do
         allow_any_instance_of(Circlemator::PrFinder)
-          .to receive(:find_pr).and_return [pr_number, '']
+          .to receive(:find_pr).and_return [pr_number, ""]
       end
 
-      it 'runs pronto against that PR' do
+      it "runs pronto against that PR" do
         expect(Pronto::Formatter::GithubPullRequestFormatter).to receive(:new).and_return pronto_double
-        expect(Pronto).to receive(:run).with 'origin/master', '.', pronto_double
+        expect(Pronto).to receive(:run).with "origin/master", ".", pronto_double
 
         subject
 
-        expect(ENV['PRONTO_PULL_REQUEST_ID']).to eq pr_number.to_s
+        expect(ENV["PRONTO_PULL_REQUEST_ID"]).to eq pr_number.to_s
       end
     end
 
-    context 'without an open PR' do
+    context "without an open PR" do
       before do
         allow_any_instance_of(Circlemator::PrFinder)
           .to receive(:find_pr).and_return nil
       end
 
-      it 'runs pronto against the commit' do
+      it "runs pronto against the commit" do
         expect(Pronto::Formatter::GithubFormatter).to receive(:new).and_return pronto_double
-        expect(Pronto).to receive(:run).with 'origin/master', '.', pronto_double
+        expect(Pronto).to receive(:run).with "origin/master", ".", pronto_double
 
         subject
       end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'circlemator/pr_finder'
+
+require "circlemator/pr_finder"
 
 module Circlemator
   class PrCommenter
@@ -19,11 +20,11 @@ module Circlemator
         compare_branch: @opts[:compare_branch],
         sha: @opts[:sha]
       ).find_pr
-      raise 'PR not found!' unless pr_url
+      raise "PR not found!" unless pr_url
 
       response = @github_repo.post "#{pr_url}/reviews", body: { commit_id: @sha,
                                                                 body: text,
-                                                                event: 'COMMENT',
+                                                                event: "COMMENT",
                                                               }.to_json
 
       if response.code != 200

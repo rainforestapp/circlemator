@@ -1,10 +1,11 @@
 # frozen_string_literal: true
-require 'httparty'
-require 'json'
+
+require "httparty"
+require "json"
 
 module Circlemator
   class SelfMerger
-    MESSAGE = 'Auto-merge by Circlemator!'
+    MESSAGE = "Auto-merge by Circlemator!"
     def initialize(opts)
       github_repo = opts.fetch(:github_repo)
       raise "#{github_repo} is invalid" unless github_repo.is_a? GithubRepo

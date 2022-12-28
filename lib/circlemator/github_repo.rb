@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'httparty'
+
+require "httparty"
 
 module Circlemator
   class GithubRepo
@@ -17,7 +18,7 @@ module Circlemator
       end
     end
 
-    base_uri 'https://api.github.com/repos'
+    base_uri "https://api.github.com/repos"
 
     def initialize(user:, repo:, github_auth_token:)
       @user = user
@@ -43,7 +44,7 @@ module Circlemator
       case path
       when %r(\A#{self.class.base_uri}(/#{@user}/#{@repo}.*)\z)
         $1
-      when %r(\A#{self.class.base_uri})
+      when /\A#{self.class.base_uri}/
         raise WrongRepo.new(path, "#{@user}/#{@repo}")
       when %r(\A/.*)
         "/#{@user}/#{@repo}#{path}"
@@ -53,7 +54,7 @@ module Circlemator
     end
 
     def auth
-      { username: @auth_token, password: 'x-oauth-basic' }
+      { username: @auth_token, password: "x-oauth-basic" }
     end
   end
 end

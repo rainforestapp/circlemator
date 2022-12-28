@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-require 'httparty'
-require 'json'
+
+require "httparty"
+require "json"
 
 module Circlemator
   class BuildCanceler
@@ -17,10 +18,10 @@ module Circlemator
       check_response resp
 
       builds = JSON.parse(resp.body)
-               .select   { |b| %w(running scheduled queued not_running).include?(b.fetch('status')) && b['branch'] }
-               .group_by { |b| b.fetch('branch') }
-               .flat_map { |_, group| group.sort_by { |b| b.fetch('build_num') }[0...-1] }
-               .map      { |b| b.fetch('build_num') }
+               .select   { |b| %w(running scheduled queued not_running).include?(b.fetch("status")) && b["branch"] }
+               .group_by { |b| b.fetch("branch") }
+               .flat_map { |_, group| group.sort_by { |b| b.fetch("build_num") }[0...-1] }
+               .map      { |b| b.fetch("build_num") }
 
       cancel_self = !!builds.delete(@current_build)
 
@@ -31,7 +32,7 @@ module Circlemator
       end
 
       if cancel_self
-        puts 'Daisy, Daisy, give me your answer, do...'
+        puts "Daisy, Daisy, give me your answer, do..."
         HTTParty.post "https://circleci.com/api/v1/project/#{@user}/#{@repo}/#{@current_build}/cancel",
                       circle_auth
       end
@@ -42,7 +43,7 @@ module Circlemator
     def circle_auth
       {
         query: { 'circle-token': @circle_api_token },
-        headers: { 'Accept' => 'application/json' },
+        headers: { "Accept" => "application/json" },
       }
     end
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'circlemator/github_repo'
+
+require "circlemator/github_repo"
 
 module Circlemator
   class PrFinder
@@ -17,21 +18,21 @@ module Circlemator
     end
 
     def find_pr
-      response = @github_repo.get '/pulls', query: { base: @base_branch }
+      response = @github_repo.get "/pulls", query: { base: @base_branch }
       if response.code != 200
         raise BadResponseError, response
       end
 
       prs = JSON.parse(response.body)
       target_pr = prs.find do |pr|
-        pr.fetch('head').fetch('ref') == @compare_branch &&
-          pr.fetch('head').fetch('sha') == @sha &&
-          pr.fetch('base').fetch('ref') == @base_branch
+        pr.fetch("head").fetch("ref") == @compare_branch &&
+          pr.fetch("head").fetch("sha") == @sha &&
+          pr.fetch("base").fetch("ref") == @base_branch
       end
 
       return if target_pr.nil?
 
-      [target_pr.fetch('number'), target_pr.fetch('url')]
+      [target_pr.fetch("number"), target_pr.fetch("url")]
     end
   end
 end
