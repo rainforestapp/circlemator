@@ -34,7 +34,12 @@ module Circlemator
     end
 
     def formatter
-      pr_number, _ = PrFinder.new(**@opts).find_pr
+      pr_number, _ = PrFinder.new(
+        github_repo: @opts[:github_repo],
+        base_branch: @opts[:base_branch],
+        compare_branch: @opts[:compare_branch],
+        sha: @opts[:sha]
+      ).find_pr
       if pr_number
         ENV['PRONTO_PULL_REQUEST_ID'] = pr_number.to_s
         Pronto::Formatter::GithubPullRequestFormatter.new

@@ -9,7 +9,7 @@ module Circlemator
       end
     end
 
-    def initialize(github_repo:, base_branch:, compare_branch:, sha:, **_opts)
+    def initialize(github_repo:, base_branch:, compare_branch:, sha:)
       @github_repo = github_repo
       @base_branch = base_branch
       @compare_branch = compare_branch
