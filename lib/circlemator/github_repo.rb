@@ -19,7 +19,7 @@ module Circlemator
 
     base_uri 'https://api.github.com/repos'
 
-    def initialize(user:, repo:, github_auth_token:, **_opts)
+    def initialize(user:, repo:, github_auth_token:)
       @user = user
       @repo = repo
       @auth_token = github_auth_token
