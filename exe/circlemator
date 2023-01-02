@@ -68,7 +68,11 @@ when 'self-merge'
   require_opt options, :github_auth_token
   require_opt options, :base_branch
   require_opt options, :compare_branch
-  options[:github_repo] = Circlemator::GithubRepo.new(options)
+  options[:github_repo] = Circlemator::GithubRepo.new(
+    user: options[:user],
+    repo: options[:repo],
+    github_auth_token: options[:github_auth_token]
+  )
 
   Circlemator::SelfMerger.new(options).merge!
 when 'cancel-old'
@@ -76,13 +80,22 @@ when 'cancel-old'
   options[:circle_api_token] ||= ENV['CIRCLE_API_TOKEN']
   require_opt options, :circle_api_token
 
-  Circlemator::BuildCanceler.new(options).cancel_old_builds!
+  Circlemator::BuildCanceler.new(
+    user: options[:user],
+    repo: options[:repo],
+    current_build: options[:current_build],
+    circle_api_token: options[:circle_api_token]
+  ).cancel_old_builds!
 when 'style-check'
   options[:sha] = require_env 'CIRCLE_SHA1'
   options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
   require_opt options, :github_auth_token
   require_opt options, :base_branch
-  options[:github_repo] = Circlemator::GithubRepo.new(options)
+  options[:github_repo] = Circlemator::GithubRepo.new(
+    user: options[:user],
+    repo: options[:repo],
+    github_auth_token: options[:github_auth_token]
+  )
 
   Circlemator::CodeAnalyser.new(options).check_style
 when 'test-coverage'
@@ -90,7 +103,11 @@ when 'test-coverage'
   options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
   require_opt options, :github_auth_token
   require_opt options, :base_branch
-  options[:github_repo] = Circlemator::GithubRepo.new(options)
+  options[:github_repo] = Circlemator::GithubRepo.new(
+    user: options[:user],
+    repo: options[:repo],
+    github_auth_token: options[:github_auth_token]
+  )
 
   Circlemator::CodeAnalyser.new(options).check_coverage
 when 'test-security'
@@ -98,7 +115,11 @@ when 'test-security'
   options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
   require_opt options, :github_auth_token
   require_opt options, :base_branch
-  options[:github_repo] = Circlemator::GithubRepo.new(options)
+  options[:github_repo] = Circlemator::GithubRepo.new(
+    user: options[:user],
+    repo: options[:repo],
+    github_auth_token: options[:github_auth_token]
+  )
 
   Circlemator::CodeAnalyser.new(options).check_security
 when 'comment'
@@ -106,7 +127,11 @@ when 'comment'
   options[:compare_branch] ||= require_env 'CIRCLE_BRANCH'
   require_opt options, :github_auth_token
   require_opt options, :base_branch
-  options[:github_repo] = Circlemator::GithubRepo.new(options)
+  options[:github_repo] = Circlemator::GithubRepo.new(
+    user: options[:user],
+    repo: options[:repo],
+    github_auth_token: options[:github_auth_token]
+  )
 
   unless ARGV[1]
     puts 'Please add some text to the comment!'
