@@ -79,6 +79,7 @@ workflows:
                 - /.*/
           context:
             - DockerHub
+            - circlemator
       - push_to_rubygems:
           requires:
             - test
@@ -91,3 +92,4 @@ workflows:
                 - /^v.*/
           context:
             - DockerHub
+            - RubyGems
